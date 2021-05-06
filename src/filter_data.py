@@ -1,10 +1,10 @@
-from config import MIN_AGE_LIMIT
+from utils.center_preferences_utils import validate_center_preferences
 from notification import beep_notification
 from notification import meow
 
 res = []
 
-def filter(data, min_vacancy_required):
+def filter(data):
     data = data.get('centers', [])
     print("{} centers".format(len(data)))
 
@@ -21,13 +21,9 @@ def filter(data, min_vacancy_required):
 
         session_data = center_data.get('sessions', [])
         for session in session_data:
-            if session.get('min_age_limit', 1000) <= MIN_AGE_LIMIT and session.get('available_capacity', 0) >= min_vacancy_required:
+            if validate_center_preferences(center_details, session):
                 beep_notification()
-
                 message = "\n!!! ----- IT'S A MATCH ----- !!!\n" + "Book " + center_details["name"] + " on the " + session["date"]
                 meow(message)
-                
-                # print(session, center_details)
-                res.append({**center_details, **session})
 
     return res

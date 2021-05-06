@@ -1,7 +1,8 @@
 import requests
 import traceback
 from datetime import datetime
-from constants import *
+from config.config import BASE_URL
+from config.config import DISTRICT_SEARCH_URL
 
 
 def get_date():

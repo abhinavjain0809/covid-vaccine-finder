@@ -1,38 +1,31 @@
-# import os
 import time
-from config import SLEEP_TIME
+from config.config import SLEEP_TIME_IN_SECONDS
+from config.config import DISTRICT_CODE_TO_CITY_MAPPING
 from fetch_cowin_data import fetch_data
 from filter_data import filter
-from district_codes import get_all_district_codes
-# from data_to_csv import write_data
-from date_time_util import get_date_array
+from utils.date_time_util import get_date_array
 
-def process(district_code, date, min_vacancy_required):
+def process(district_code, date):
     data = fetch_data(district_code, date)
-    matched_sessions = filter(data, min_vacancy_required)
-    if matched_sessions:
-        pass
-    # else:
-    #     print("No Match found")
-
+    matched_sessions = filter(data)
 
 def main():
-    # district_code = os.environ.get('DISTRICT_CODE', '650')
     print("\n\nLet me find you a vaccine, while you sit back and relax :)\n\n")
     while True:
-        # print("Starting Process")
-        for mapping in get_all_district_codes():
+        for mapping in DISTRICT_CODE_TO_CITY_MAPPING:
+            if (mapping.get("active") == False):
+                continue
             
             for date in get_date_array():
                 print(mapping.get('district_name'), end = " - ")
                 print(date, end = " - ")
                 
-                process(mapping.get('district_code'), date, mapping.get('min_vacancy_required'))
+                process(mapping.get('district_code'), date)
 
             print()
             
-        print("Sleeping for {} seconds".format(SLEEP_TIME) + "\n")
-        time.sleep(SLEEP_TIME)
+        print("Sleeping for {} seconds".format(SLEEP_TIME_IN_SECONDS) + "\n")
+        time.sleep(SLEEP_TIME_IN_SECONDS)
 
 
 if __name__=="__main__":
