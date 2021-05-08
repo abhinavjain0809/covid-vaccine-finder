@@ -2,3 +2,6 @@ requests==2.25.1
 boto3==1.17.66
 beepy==1.0.7
 cowsay==4.0
+telebot==0.0.4
+Telethon==1.21.1
+twilio==6.58.0
