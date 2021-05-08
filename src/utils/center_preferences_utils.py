@@ -1,19 +1,18 @@
 from collections import namedtuple
-from config.config import CENTER_PREFERENCE_DATA
 from config.config import MIN_AGE_LIMIT
 
-def validate_center_preferences(center_details, session):
-	if (len(CENTER_PREFERENCE_DATA) == 0):
-		return default_center_validations(session);
+def validate_center_preferences(center_details, session, udf_center_preferences):
+	if (udf_center_preferences is None or len(udf_center_preferences) == 0):
+		return default_center_validations(session)
 
-	custom_center_preferences = load_custom_center_preferences(center_details["center_id"])
+	custom_center_preferences = load_custom_center_preferences(center_details["center_id"], udf_center_preferences)
 	if (custom_center_preferences == None):
 		return False
 	
 	return custom_center_validations(session, custom_center_preferences)
 
-def load_custom_center_preferences(center_id):
-	for data in CENTER_PREFERENCE_DATA:
+def load_custom_center_preferences(center_id, udf_center_preferences):
+	for data in udf_center_preferences:
 		custom_center_preferences = namedtuple("CenterPreferences", data.keys())(*data.values())
 		if (custom_center_preferences.center_id == str(center_id)):
 			return custom_center_preferences
