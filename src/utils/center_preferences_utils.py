@@ -26,7 +26,7 @@ def default_center_validations(session):
 	return False
 
 def custom_center_validations(session, custom_center_preferences):
-	if is_age_valid(session) and is_center_having_enough_capacity(session, custom_center_preferences.desired_capacity) and is_perferred_vaccine_available(session, custom_center_preferences.vaccine_preference):
+	if is_age_valid(session) and is_center_having_enough_capacity(session, custom_center_preferences.desired_capacity) and is_preferred_vaccine_available(session, custom_center_preferences.vaccine_preference):
 		return True
 
 	return False
@@ -38,9 +38,9 @@ def is_age_valid(session):
 	return False
 
 def is_center_having_enough_capacity(session, desired_capacity):
-	return session.get('available_capacity', 0) >= int(desired_capacity)
+	return session.get('available_capacity_dose1', 0) >= int(desired_capacity)
 
-def is_perferred_vaccine_available(session, vaccine_preference):
+def is_preferred_vaccine_available(session, vaccine_preference):
 	if (vaccine_preference == "any"):
 		return True
 

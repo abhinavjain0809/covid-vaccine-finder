@@ -50,7 +50,7 @@ def get_center_preference_data_for_district(district_name):
     return CENTER_PREFERENCE_DATA.get(district_name)
 
 def get_communication_to_be_sent(center_details, session):
-    return COMMUNICATION_FORMAT.replace("{{state}}", center_details["state_name"]).replace("{{district_name}}", center_details["district_name"]).replace("{{date}}", session["date"]).replace("{{seats_available}}", str(session["available_capacity"])).replace("{{center_name}}", center_details["name"]).replace("{{min_age_limit}}", str(MIN_AGE_LIMIT))
+    return COMMUNICATION_FORMAT.replace("{{pin_code}}", str(center_details["pincode"])).replace("{{state}}", center_details["state_name"]).replace("{{district_name}}", center_details["district_name"]).replace("{{date}}", session["date"]).replace("{{seats_available}}", str(session["available_capacity"])).replace("{{center_name}}", center_details["name"]).replace("{{min_age_limit}}", str(MIN_AGE_LIMIT))
 
 def is_user_interested_in_district_updates(username, district_name):
     if (username not in USER_TO_DISTRICT_CODE_PREFERENCE_MAPPING):
